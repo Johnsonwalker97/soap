@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="urn:SoapService"
+             targetNamespace="urn:SoapService">
+  
+    <message name="GetDataRequest">
+        <part name="param" type="xsd:string"/>
+    </message>
+    <message name="GetAllProductsRequest">
+        <!-- Aucun paramètre requis pour cette opération -->
+    </message>
+    <message name="DeleteproductsRequest">
+         <part name="param" type="xsd:string"/>
+    </message>
+    <message name="InsertRequest">
+         <part name="data" type="xsd:string"/>
+    </message>
+    <message name="UpdateRequest">
+         <part name="data" type="xsd:string"/>
+    </message>
+
+  
+    <message name="GetDataResponse">
+        <part name="data" type="xsd:string"/>
+    </message>
+    <message name="GetAllProductsResponse">
+        <part name="products" type="xsd:string"/>
+    </message>
+   <message name="DeleteproductsResponse">
+        <part name="status" type="xsd:string"/>
+   </message>
+   <message name="InsertResponse">
+        <part name="status" type="xsd:string"/>
+   </message>
+
+   <message name="UpdateResponse">
+        <part name="status" type="xsd:string"/>
+   </message>
+  
+    <portType name="SoapServicePortType">
+        <operation name="getData">
+            <input message="tns:GetDataRequest"/>
+            <output message="tns:GetDataResponse"/>
+        </operation>
+        <!-- ... autres opérations ... -->
+
+        <operation name="getAllProducts">
+            <input message="tns:GetAllProductsRequest"/>
+            <output message="tns:GetAllProductsResponse"/>
+        </operation>
+
+      <!-- ... autres opérations ... -->
+
+        <operation name="Deleteproducts">
+            <input message="tns:DeleteproductsRequest"/>
+            <output message="tns:DeleteproductsResponse"/>
+        </operation>
+
+
+<!--... autres opérations ... -->
+
+        <operation name="Insert">
+            <input message="tns:InsertRequest"/>
+            <output message="tns:InsertResponse"/>
+        </operation>
+
+<!-- ... autres opérations ... -->
+
+        <operation name="Update">
+            <input message="tns:UpdateRequest"/>
+            <output message="tns:UpdateResponse"/>
+        </operation>
+    </portType>
+  
+    <binding name="SoapServiceBinding" type="tns:SoapServicePortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="getData">
+            <soap:operation soapAction="urn:SoapService#getData"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:SoapService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:SoapService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+        <!-- ... Opération de recherche de produit ... -->
+
+        <operation name="getAllProducts">
+            <soap:operation soapAction="urn:SoapService#getAllProducts"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:SoapService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:SoapService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+
+
+<!-- ... Opération de supression ... -->
+
+        <operation name="Deleteproducts">
+            <soap:operation soapAction="urn:FakeSoapService#Deleteproducts"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:SoapService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:SoapService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+
+
+<!-- ... Operation d'Insertion de produit ... -->
+
+        <operation name="Insert">
+            <soap:operation soapAction="urn:SoapService#Insert"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:SoapService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:SoapService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+
+
+<!-- ... Opération de Mise à jour de produit ... -->
+
+        <operation name="Update">
+            <soap:operation soapAction="urn:FakeSoapService#Update"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:SoapService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:SoapService" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+    </binding>
+
+  
+    <service name="FakeSoapService">
+        <port name="FakeSoapPort" binding="tns:SoapServiceBinding">
+            <soap:address location="http://localhost:8000/soap-service.php"/>
+        </port>
+    </service>
+
+
+ 
+</definitions>
